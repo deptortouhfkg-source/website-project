@@ -1,0 +1,834 @@
+/* ======= GENERAL ======= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: url("bg.jpeg") center/cover no-repeat fixed;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Overlay putih lembut */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* ======= LOGIN ======= */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 320px;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #004aad;
+}
+
+.login-box input,
+.login-box select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #004aad;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #003b8a;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+}
+
+/* ======= DASHBOARD ======= */
+.dashboard {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ======= SIDEBAR ======= */
+.sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #004aad, #5fa8f5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    /* ✅ Tambahkan agar bisa discroll */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+}
+
+.sidebar .profile {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.welcome h2 {
+    font-size: 16px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.sidebar nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Logout diatur lebih ke atas agar tak terpotong */
+.logout {
+    margin: 15px;
+    background: #e63946;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    background: #c92733;
+}
+
+/* ======= MATERI ======= */
+#materiList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* ✅ Jarak antar materi */
+}
+
+#materiList li {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#materiList li button {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#materiList li button:hover {
+    background: #003b8a;
+}
+
+
+/* ======= MAIN CONTENT ======= */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-content h1 {
+    font-size: 22px;
+    color: #004aad;
+    margin-bottom: 15px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ======= CARD STYLE ======= */
+.tab-content table,
+.upload-container,
+.announcement-list,
+#materiList,
+#requirementContainer {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.upload-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* ======= TABLE ======= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #004aad;
+    color: white;
+}
+
+td input,
+td select {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.btn-verif {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-verif:hover {
+    background: #003b8a;
+}
+
+/* ======= STATUS ======= */
+.status-hadir {
+    background: #00b050;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+/* ======= REQUIREMENT ======= */
+/* ======= REQUIREMENT ======= */
+#requirementContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.req-folder {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.folder-header {
+    background: #004aad;
+    color: white;
+    padding: 14px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.folder-header:hover {
+    background: #003b8a;
+}
+
+.folder-content {
+    display: none;
+    padding: 20px;
+}
+
+.folder-section {
+    margin-bottom: 20px;
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+}
+
+
+
+.folder-section h4 {
+    color: #004aad;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.folder-section label {
+    font-weight: 600;
+    margin-top: 8px;
+    display: block;
+    font-size: 14px;
+}
+
+.folder-section input,
+.folder-section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* ======= AKTIVASI ======= */
+.sub-aktivasi {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    transition: 0.3s ease;
+}
+
+.sub-aktivasi strong {
+    display: block;
+    color: #004aad;
+    margin-bottom: 8px;
+}
+
+.sub-aktivasi label {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.sub-aktivasi input,
+.sub-aktivasi select {
+    padding: 6px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+.sub-aktivasi button {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.sub-aktivasi button:hover {
+    background: #003b8a;
+}
+
+/* ======= DATA PASIEN (Form Grid) ======= */
+.folder-section.data-pasien {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px;
+    /* jarak antar kolom dan baris */
+    border-top: none;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.folder-section.data-pasien h4 {
+    grid-column: 1 / -1;
+    font-size: 17px;
+    font-weight: 700;
+    color: #004aad;
+    border-bottom: 2px solid #004aad;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.folder-section.data-pasien label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.folder-section.data-pasien input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.folder-section.data-pasien input:focus {
+    outline: none;
+    border-color: #004aad;
+    box-shadow: 0 0 4px rgba(0, 74, 173, 0.3);
+}
+
+
+/* ======= RESPONSIVE ======= */
+/* === RESPONSIVE UNTUK MOBILE (max 600px) === */
+@media (max-width: 600px) {
+
+    /* Login Page */
+    .login-box {
+        width: 90%;
+        padding: 25px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 60px;
+        position: fixed;
+    }
+
+    .sidebar button span,
+    .welcome,
+    .username-display {
+        display: none;
+    }
+
+    .sidebar .profile-pic {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Main content */
+    .main-content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+        padding: 15px;
+    }
+
+    /* Tabel agar bisa digeser */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Form elemen agar full width */
+    input,
+    select,
+    button {
+        font-size: 14px;
+    }
+
+    /* Container profil */
+    .profile-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .profile-photo img {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Folder requirement */
+    .folder-section.data-pasien {
+        grid-template-columns: 1fr;
+    }
+
+    /* Judul lebih kecil */
+    h1,
+    h2 {
+        font-size: 18px;
+    }
+}
+
+/* === Untuk tablet ukuran sedang (max 900px) === */
+@media (max-width: 900px) and (min-width: 601px) {
+    .sidebar {
+        width: 80px;
+    }
+
+    .main-content {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+    }
+
+    .sidebar button span {
+        display: none;
+    }
+}
+
+
+.btn-verif.waiting {
+    background: #ff8c00 !important;
+    color: white;
+}
+
+.btn-verif.approved {
+    background: #00b050 !important;
+    color: white;
+}
+
+#panduanContent h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+}
+
+.username-display {
+    font-size: 14px;
+    color: #fff;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+#generateQR {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#generateQR:hover {
+    background: #003b8a;
+}
+
+.btn-verif.waiting {
+    background: #ff8c00 !important;
+    /* oranye */
+    color: white;
+    cursor: default;
+}
+
+.btn-verif.waiting {
+    background: #ff8c00 !important;
+    color: white;
+    cursor: default;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 20px;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+.profile-photo {
+    text-align: center;
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.profile-info label {
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+}
+
+.profile-info input,
+.profile-info select {
+    width: 100%;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* === PROFIL === */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-info {
+    width: 100%;
+}
+
+.profile-info label {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.profile-info input,
+.profile-info select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* === TOMBOL SAMA SEPERTI CATAT KEHADIRAN === */
+.btn-verif {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-verif:hover {
+    background: #0056b3;
+}
+
+.btn-verif.waiting {
+    background: #ff8c00 !important;
+    color: white;
+    cursor: default;
+}
+
+/* === PROFIL DI DASHBOARD === */
+.dashboard-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border-radius: 1rem;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.dashboard-profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+.dashboard-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border-radius: 1rem;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.dashboard-profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+.dashboard-profile-info h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.profile-photo {
+    display: flex;
+    flex-direction: column;
+    /* tumpuk vertikal: foto di atas, tombol di bawah */
+    align-items: center;
+    /* rata tengah horizontal */
+    justify-content: center;
+    /* posisi vertikal tengah dalam kontainer */
+    margin-bottom: 20px;
+    /* beri jarak dari data di bawah */
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    object-fit: cover;
+    margin-bottom: 10px;
+    /* jarak kecil antara foto dan tombol */
+}
+
+#btnUploadPhoto {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#btnUploadPhoto:hover {
+    background: #0056b3;
+}
+
+.username-display {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-top: 4px;
+}
+
+#btnChangePassword,
+#btnSavePassword {
+    background-color: #004aad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#btnChangePassword:hover,
+#btnSavePassword:hover {
+    background-color: #0066ff;
+}
