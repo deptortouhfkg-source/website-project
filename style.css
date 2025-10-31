@@ -7,7 +7,7 @@
 }
 
 body {
-  background: url("bg.jpg") center/cover no-repeat fixed;
+  background: url("bg.jpeg") center/cover no-repeat fixed;
   position: relative;
   min-height: 100vh;
 }
@@ -943,3 +943,4 @@ td input, td select {
   margin-bottom: 10px;
   resize: vertical;
 }
+
