@@ -1,257 +1,302 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-LOGBOOK ORTODONTI</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/feather-icons"></script>
-    <link rel="icon" type="image/png" href="favicon.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-LOGBOOK ORTODONTI</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/feather-icons"></script>
+  <link rel="icon" type="image/png" href="favicon.png" />
 </head>
-
 <body>
-    <!-- ✅ Tombol menu responsif (selalu tampil di HP) -->
-    <button id="menuToggle" class="menu-toggle">
-        <i data-feather="menu"></i>
-    </button>
+  <!-- =============== LOGIN PAGE =============== -->
+  <div id="loginPage" class="login-page">
+    <div class="login-box">
+      <h2>E-Logbook Ortodonti</h2>
+      <form id="loginForm">
+        <select id="role" required>
+          <option value="mahasiswa">Mahasiswa</option>
+          <option value="dosen">Dosen</option>
+        </select>
+        <input type="text" id="username" placeholder="NIM / Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p id="loginError" class="error"></p>
+      </form>
+          <p><a href="#" id="showRegister">Daftar Akun</a> | <a href="#" id="showForgot">Lupa Password?</a></p>
+          
+    </div>
+  </div>
 
-    <!-- =============== LOGIN PAGE =============== -->
-    <div id="loginPage" class="login-page">
-        <div class="login-box">
-            <h2>E-Logbook Ortodonti</h2>
-            <form id="loginForm">
-                <select id="role" required>
-                    <option value="mahasiswa">Mahasiswa</option>
-                    <option value="dosen">Dosen</option>
-                </select>
-                <input type="text" id="username" placeholder="NIM / Username" required />
-                <input type="password" id="password" placeholder="Password" required />
-                <button type="submit">Login</button>
-                <p id="loginError" class="error"></p>
-            </form>
+  <!-- === Halaman Register === -->
+<div id="registerPage" class="login-page" style="display:none;">
+  <div class="login-box">
+    <h2>Daftar Akun</h2>
+    <form id="registerForm">
+      <input type="text" id="regNama" placeholder="Nama Lengkap" required>
+      <input type="text" id="regNIM" placeholder="NIM" required>
+      <input type="text" id="regOVO" placeholder="OVO" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <button type="submit">Daftar</button>
+    </form>
+    <p class="error" id="registerError"></p>
+    <p><a href="#" id="backToLogin1">Kembali ke Login</a></p>
+  </div>
+</div>
+
+<!-- === Halaman Lupa Password === -->
+<div id="forgotPage" class="login-page" style="display:none;">
+  <div class="login-box">
+    <h2>Lupa Password</h2>
+    <form id="forgotForm">
+      <input type="email" id="forgotEmail" placeholder="Masukkan Email Anda" required>
+      <button type="submit">Kirim Link Reset</button>
+    </form>
+    <p class="error" id="forgotError"></p>
+    <p><a href="#" id="backToLogin2">Kembali ke Login</a></p>
+  </div>
+</div>
+
+  <!-- =============== DASHBOARD =============== -->
+  <div id="dashboardPage" class="dashboard" style="display:none;">
+    <!-- Sidebar -->
+     <!-- Tombol menu (hanya tampil di HP) -->
+<button id="menuToggle" class="menu-toggle">
+  <i data-feather="menu"></i>
+</button>
+    <aside class="sidebar">
+     <div class="profile">
+        <img id="profilePic" src="profile.jpg" alt="Profile" class="profile-pic" />
+        <div class="welcome">
+          <h2>Selamat Datang</h2>
+          <p id="userName" class="username-display"></p>
         </div>
+      </div>
+
+      
+      <nav>
+        <button class="tablinks active" data-tab="dashboardContent"><i data-feather="home"></i> Dashboard</button>
+        <button class="tablinks" data-tab="announcementContent"><i data-feather="bell"></i> Pengumuman</button>
+        <button class="tablinks" data-tab="attendanceContent"><i data-feather="calendar"></i> Kehadiran</button>
+        <button class="tablinks" data-tab="journalReadingContent"><i data-feather="book-open"></i> Journal Reading</button>
+        <button class="tablinks" data-tab="materiContent"><i data-feather="file-text"></i> Materi Kepaniteraan</button>
+        <button class="tablinks" data-tab="kasusContent"><i data-feather="briefcase"></i> Mengikuti Presentasi Kasus</button>
+        <button class="tablinks" data-tab="aktivasiContent"><i data-feather="cpu"></i> Mengikuti Aktivasi Teman</button>
+        <button class="tablinks" data-tab="jurnalContent"><i data-feather="file"></i> Mengikuti Presentasi Jurnal</button>
+        <button class="tablinks" data-tab="evaluasiContent"><i data-feather="clipboard"></i> Evaluasi Presentasi Kasus</button>
+        <button class="tablinks" data-tab="requirementContent"><i data-feather="folder"></i> Requirement</button>
+        <button class="tablinks" data-tab="panduanContent"><i data-feather="info"></i> Panduan Departemen</button>
+        <button class="tab-link" onclick="showTab('profileContent')">Profil</button>
+        <button id="logoutBtn" class="logout"><i data-feather="log-out"></i> Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard -->
+      <section id="dashboardContent" class="tab-content" style="display:block;">
+        <h1>Dashboard</h1>
+        <p>Selamat datang di sistem E-Logbook Ortodonti.</p>
+      </section>
+
+      <!-- Pengumuman -->
+      <section id="announcementContent" class="tab-content">
+  <h1>Pengumuman</h1>
+  <div id="announcementForm"></div>
+  <ul id="announcementList" class="announcement-list"></ul>
+</section>
+
+
+      <!-- Kehadiran -->
+      <section id="attendanceContent" class="tab-content">
+        <h1>Kehadiran</h1>
+        <button id="generateQR">Catat Kehadiran</button>
+        <table>
+          <thead>
+            <tr><th>No</th><th>Tanggal</th><th>Jam</th><th>Status</th><th>Lokasi</th></tr>
+          </thead>
+          <tbody id="attendanceBody"></tbody>
+        </table>
+      </section>
+
+      <!-- Journal Reading -->
+      <section id="journalReadingContent" class="tab-content">
+        <h1>Journal Reading</h1>
+        <div class="upload-container">
+          <label>Journal Asli / Acuan (PDF):</label><input type="file" accept=".pdf" />
+          <label>Terjemahan Jurnal (PDF):</label><input type="file" accept=".pdf" />
+          <label>PPT Journal Reading (PDF):</label><input type="file" accept=".pdf" />
+          <label>Laporan Lengkap (PDF):</label><input type="file" accept=".pdf" />
+        </div>
+      </section>
+
+      <!-- Materi -->
+      <section id="materiContent" class="tab-content">
+        <h1>Materi Kepaniteraan Ortodonti</h1>
+        <ul id="materiList"></ul>
+      </section>
+
+      <!-- Mengikuti Presentasi Kasus -->
+      <section id="kasusContent" class="tab-content">
+        <h1>Mengikuti Presentasi Kasus</h1>
+        <table>
+          <thead><tr><th>No</th><th>Tanggal</th><th>Nama Mahasiswa</th><th>Dosen Pembimbing</th><th>Verifikasi</th></tr></thead>
+          <tbody id="kasusBody"></tbody>
+        </table>
+      </section>
+
+      <!-- Mengikuti Aktivasi Teman -->
+      <section id="aktivasiContent" class="tab-content">
+        <h1>Mengikuti Aktivasi Teman</h1>
+        <table>
+          <thead><tr><th>No</th><th>Tanggal</th><th>Kode Elemen & Komponen</th><th>Operator</th><th>Dosen Pembimbing</th><th>Verifikasi</th></tr></thead>
+          <tbody id="aktivasiBody"></tbody>
+        </table>
+      </section>
+
+      <!-- Mengikuti Presentasi Jurnal -->
+      <section id="jurnalContent" class="tab-content">
+        <h1>Mengikuti Presentasi Jurnal</h1>
+        <table>
+          <thead><tr><th>No</th><th>Tanggal</th><th>Judul Jurnal</th><th>Nama Mahasiswa</th><th>Dosen Pembimbing</th><th>Verifikasi</th></tr></thead>
+          <tbody id="jurnalBody"></tbody>
+        </table>
+      </section>
+
+      <!-- Evaluasi Presentasi Kasus -->
+      <section id="evaluasiContent" class="tab-content">
+        <h1>Evaluasi Presentasi Kasus</h1>
+        <table>
+          <thead><tr><th>Model</th><th>Nama Pasien</th><th>Umur</th><th>Tanggal Presentasi Kasus</th><th>Verifikasi</th><th>Nilai</th></tr></thead>
+          <tbody id="evaluasiBody"></tbody>
+        </table>
+      </section>
+
+      <!-- Requirement -->
+     <section id="requirementContent" class="tab-content">
+  <h1>Requirement</h1>
+  <div id="requirementContainer"></div>
+</section>
+
+
+      <!-- Panduan Departemen -->
+      <div id="panduanContent" class="tab-content" style="display:none;">
+  <h2>Panduan Kepaniteraan Klinik Ortodonti</h2>
+  <iframe
+    src="panduan-ortodonti.pdf"
+    width="100%"
+    height="800px"
+    style="border:none; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.1);"
+  ></iframe>
+  <p style="font-size:14px; text-align:center; margin-top:10px;">
+    Jika file tidak tampil, <a href="panduan-ortodonti.pdf" target="_blank">klik di sini untuk membuka panduan</a>.
+  </p>
+</div>
+
+<!-- PROFIL MAHASISWA -->
+<div id="profileContent" class="tab-content" style="display:none;">
+
+  <div id="profileSection" class="profile-container">
+    <div class="profile-photo">
+  <img id="profileImage" src="default-photo.png" alt="Foto Mahasiswa">
+  <input type="file" id="uploadPhoto" accept="image/*" style="display:none;">
+  <button id="btnUploadPhoto" class="btn-verif">Unggah Foto</button>
+</div>
+
+    <div class="profile-info">
+      <label>Nama Lengkap:</label>
+      <input type="text" id="profileNama" placeholder="Nama Lengkap" disabled>
+
+      <label>NIM:</label>
+      <input type="text" id="profileNIM" placeholder="NIM" disabled>
+
+      <label>OVO ke:</label>
+      <input type="number" id="profileOVO" min="1" placeholder="OVO Ke" disabled>
+
+      <label>Dosen Pembimbing:</label>
+      <select id="profileDosen" disabled>
+        <option value="">-- Pilih Dosen Pembimbing --</option>
+      </select>
     </div>
 
-    <!-- =============== DASHBOARD =============== -->
-    <div id="dashboardPage" class="dashboard" style="display:none;">
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="profile">
-                <img id="profilePic" src="profile.jpeg" alt="Profile" class="profile-pic" />
-                <div class="welcome">
-                    <h2>Selamat Datang</h2>
-                    <p id="userName" class="username-display"></p>
-                </div>
-            </div>
-            <nav>
-                <button class="tablinks active" data-tab="dashboardContent"><i data-feather="home"></i> Dashboard</button>
-                <button class="tablinks" data-tab="announcementContent"><i data-feather="bell"></i> Pengumuman</button>
-                <button class="tablinks" data-tab="attendanceContent"><i data-feather="calendar"></i> Kehadiran</button>
-                <button class="tablinks" data-tab="journalReadingContent"><i data-feather="book-open"></i> Journal Reading</button>
-                <button class="tablinks" data-tab="materiContent"><i data-feather="file-text"></i> Materi Kepaniteraan</button>
-                <button class="tablinks" data-tab="kasusContent"><i data-feather="briefcase"></i> Mengikuti Presentasi Kasus</button>
-                <button class="tablinks" data-tab="aktivasiContent"><i data-feather="cpu"></i> Mengikuti Aktivasi Teman</button>
-                <button class="tablinks" data-tab="jurnalContent"><i data-feather="file"></i> Mengikuti Presentasi Jurnal</button>
-                <button class="tablinks" data-tab="evaluasiContent"><i data-feather="clipboard"></i> Evaluasi Presentasi Kasus</button>
-                <button class="tablinks" data-tab="requirementContent"><i data-feather="folder"></i> Requirement</button>
-                <button class="tablinks" data-tab="panduanContent"><i data-feather="info"></i> Panduan Departemen</button>
-                <button class="tab-link" onclick="showTab('profileContent')">Profil</button>
-                <button id="logoutBtn" class="logout"><i data-feather="log-out"></i> Logout</button>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dashboard -->
-            <section id="dashboardContent" class="tab-content" style="display:block;">
-                <h1>Dashboard</h1>
-                <p>Selamat datang di sistem E-Logbook Ortodonti.</p>
-            </section>
-
-            <!-- Pengumuman -->
-            <section id="announcementContent" class="tab-content">
-                <h1>Pengumuman</h1>
-                <div id="announcementForm"></div>
-                <ul id="announcementList" class="announcement-list"></ul>
-            </section>
-
-            <!-- Kehadiran -->
-            <section id="attendanceContent" class="tab-content">
-                <h1>Kehadiran</h1>
-                <button id="generateQR">Catat Kehadiran</button>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Jam</th>
-                            <th>Status</th>
-                            <th>Lokasi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendanceBody"></tbody>
-                </table>
-            </section>
-
-            <!-- Journal Reading -->
-            <section id="journalReadingContent" class="tab-content">
-                <h1>Journal Reading</h1>
-                <div class="upload-container">
-                    <label>Journal Asli / Acuan (PDF):</label><input type="file" accept=".pdf" />
-                    <label>Terjemahan Jurnal (PDF):</label><input type="file" accept=".pdf" />
-                    <label>PPT Journal Reading (PDF):</label><input type="file" accept=".pdf" />
-                    <label>Laporan Lengkap (PDF):</label><input type="file" accept=".pdf" />
-                </div>
-            </section>
-
-            <!-- Materi -->
-            <section id="materiContent" class="tab-content">
-                <h1>Materi Kepaniteraan Ortodonti</h1>
-                <ul id="materiList"></ul>
-            </section>
-
-            <!-- Presentasi Kasus -->
-            <section id="kasusContent" class="tab-content">
-                <h1>Mengikuti Presentasi Kasus</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Dosen Pembimbing</th>
-                            <th>Verifikasi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="kasusBody"></tbody>
-                </table>
-            </section>
-
-            <!-- Aktivasi Teman -->
-            <section id="aktivasiContent" class="tab-content">
-                <h1>Mengikuti Aktivasi Teman</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Kode Elemen & Komponen</th>
-                            <th>Operator</th>
-                            <th>Dosen Pembimbing</th>
-                            <th>Verifikasi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="aktivasiBody"></tbody>
-                </table>
-            </section>
-
-            <!-- Presentasi Jurnal -->
-            <section id="jurnalContent" class="tab-content">
-                <h1>Mengikuti Presentasi Jurnal</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Judul Jurnal</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Dosen Pembimbing</th>
-                            <th>Verifikasi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="jurnalBody"></tbody>
-                </table>
-            </section>
-
-            <!-- Evaluasi Kasus -->
-            <section id="evaluasiContent" class="tab-content">
-                <h1>Evaluasi Presentasi Kasus</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Nama Pasien</th>
-                            <th>Umur</th>
-                            <th>Tanggal Presentasi Kasus</th>
-                            <th>Verifikasi</th>
-                            <th>Nilai</th>
-                        </tr>
-                    </thead>
-                    <tbody id="evaluasiBody"></tbody>
-                </table>
-            </section>
-
-            <!-- Requirement -->
-            <section id="requirementContent" class="tab-content">
-                <h1>Requirement</h1>
-                <div id="requirementContainer"></div>
-            </section>
-
-            <!-- Panduan -->
-            <section id="panduanContent" class="tab-content" style="display:none;">
-                <h2>Panduan Kepaniteraan Klinik Ortodonti</h2>
-                <iframe src="panduan-ortodonti.pdf" width="100%" height="800px"
-                    style="border:none; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.1);"></iframe>
-                <p style="font-size:14px; text-align:center; margin-top:10px;">
-                    Jika file tidak tampil, <a href="panduan-ortodonti.pdf" target="_blank">klik di sini untuk membuka panduan</a>.
-                </p>
-            </section>
-
-            <!-- Profil -->
-            <section id="profileContent" class="tab-content" style="display:none;">
-                <div id="profileSection" class="profile-container">
-                    <div class="profile-photo">
-                        <img id="profileImage" src="default-photo.png" alt="Foto Mahasiswa">
-                        <input type="file" id="uploadPhoto" accept="image/*" style="display:none;">
-                        <button id="btnUploadPhoto" class="btn-verif">Unggah Foto</button>
-                    </div>
-
-                    <div class="profile-info">
-                        <label>Nama Lengkap:</label>
-                        <input type="text" id="profileNama" placeholder="Nama Lengkap" disabled>
-
-                        <label>NIM:</label>
-                        <input type="text" id="profileNIM" placeholder="NIM" disabled>
-
-                        <label>OVO ke:</label>
-                        <input type="number" id="profileOVO" min="1" placeholder="OVO Ke" disabled>
-
-                        <label>Dosen Pembimbing:</label>
-                        <select id="profileDosen" disabled>
-                            <option value="">-- Pilih Dosen Pembimbing --</option>
-                        </select>
-                    </div>
-
-                    <div class="profile-actions">
-                        <button id="btnEditProfile" class="btn-verif">Edit Data</button>
-                        <button id="btnSaveProfile" class="btn-verif waiting" style="display:none;">Simpan</button>
-                        <button id="btnChangePassword" class="btn-verif">Ubah Password</button>
-                    </div>
-
-                    <div id="changePasswordSection" style="display:none;">
-                        <label>Password Baru:</label>
-                        <input type="password" id="newPassword">
-                        <label>Konfirmasi Password:</label>
-                        <input type="password" id="confirmPassword">
-                        <button id="btnSavePassword" class="btn-verif waiting">Simpan Password</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Evaluasi Mahasiswa -->
-            <section id="evaluasiMahasiswaContent" class="tab-content">
-                <h1>Evaluasi Mahasiswa</h1>
-                <div id="evalBody"></div>
-            </section>
-        </main>
+    <div class="profile-actions">
+      <button id="btnEditProfile" class="btn-verif">Edit Data</button>
+      <button id="btnSaveProfile" class="btn-verif waiting" style="display:none;">Simpan</button>
+      <button id="btnChangePassword" class="btn-verif">Ubah Password</button>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        feather.replace();
-    </script>
+    <div id="changePasswordSection" style="display:none;">
+      <label>Password Baru:</label>
+      <input type="password" id="newPassword">
+      <label>Konfirmasi Password:</label>
+      <input type="password" id="confirmPassword">
+      <button id="btnSavePassword" class="btn-verif waiting">Simpan Password</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Evaluasi Mahasiswa -->
+<section id="evaluasiMahasiswaContent" class="tab-content">
+  <h1>Evaluasi Mahasiswa</h1>
+  <div id="evalBody"></div>
+</section>
+
+ <!-- === Firebase Configuration (perbaikan lengkap) === -->
+<script type="module">
+  // Import modul yang dibutuhkan
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail
+  } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+  // Konfigurasi Firebase 
+  const firebaseConfig = {
+    apiKey: "AIzaSyDlz8dHCAjn95Mk4U9U30EO2X9y0FHDjiU",
+    authDomain: "deptortofkguh.firebaseapp.com",
+    projectId: "deptortofkguh",
+    storageBucket: "deptortofkguh.firebasestorage.app",
+    messagingSenderId: "152290918751",
+    appId: "1:152290918751:web:050226048360e3a45176ea"
+  };
+
+  // Inisialisasi Firebase App
+  const app = initializeApp(firebaseConfig);
+
+  // Aktifkan Authentication & Firestore
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Buat variabel global agar bisa diakses dari script.js
+  window.auth = auth;
+  window.db = db;
+
+  window.firebaseAuth = {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail
+  };
+  window.firebaseSetDoc = setDoc;
+  window.firebaseDoc = doc;
+  window.firebaseGetDoc = getDoc;
+</script>
+
+
+<!-- === SweetAlert2 === -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- === File utama === -->
+<script src="script.js"></script>
+</script>
 </body>
-
 </html>
