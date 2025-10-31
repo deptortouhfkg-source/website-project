@@ -1,9 +1,342 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const menuToggle = document.getElementById("menuToggle");
-  const sidebar = document.querySelector(".sidebar");
-  if (menuToggle && sidebar) {
-    menuToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
-    });
-  }
-});
+/* =======================================================
+   E-LOGBOOK ORTODONTI - MODERN RESPONSIVE DESIGN (FIXED)
+   ======================================================= */
+
+/* ======= RESET & GLOBAL ======= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: url("bg.jpeg") center/cover no-repeat fixed;
+    position: relative;
+    min-height: 100vh;
+    color: #333;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+/* ======= LOGIN ======= */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 360px;
+    max-width: 95%;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #004aad;
+    font-weight: 600;
+}
+
+.login-box input,
+.login-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #004aad;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.login-box button:hover {
+    background-color: #003b8a;
+    transform: translateY(-2px);
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+}
+
+/* ======= DASHBOARD ======= */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: transparent;
+    flex-direction: row;
+}
+
+/* ======= SIDEBAR ======= */
+.sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #004aad, #5fa8f5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    transition: 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar .profile {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.welcome h2 {
+    font-size: 16px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.username-display {
+    font-size: 14px;
+    color: #fff;
+}
+
+.sidebar nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.logout {
+    margin: 15px;
+    background: #e63946;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    background: #c92733;
+}
+
+/* ======= MAIN CONTENT ======= */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+    overflow-y: auto;
+    transition: margin 0.3s ease;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active,
+#dashboardContent {
+    display: block;
+}
+
+.tab-content h1 {
+    font-size: 24px;
+    color: #004aad;
+    margin-bottom: 15px;
+}
+
+/* ======= CARD & TABLE ======= */
+.tab-content table,
+.upload-container,
+#materiList,
+#requirementContainer {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto;
+    display: block;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #004aad;
+    color: white;
+}
+
+td input,
+td select {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.btn-verif {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-verif:hover {
+    background: #003b8a;
+}
+
+.btn-verif.waiting { background: #ff8c00 !important; }
+.btn-verif.approved { background: #00b050 !important; }
+
+/* ======= MENU TOGGLE ======= */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    z-index: 1001;
+    cursor: pointer;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 900px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 240px;
+    }
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .login-box {
+        width: 95%;
+        padding: 25px;
+    }
+    h1, h2 {
+        font-size: 18px;
+    }
+    button, input, select {
+        font-size: 15px;
+    }
+    iframe {
+        width: 100% !important;
+        height: 70vh;
+        border: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 200px;
+    }
+    .main-content {
+        padding: 15px;
+    }
+    .btn-verif {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    .profile-pic {
+        width: 70px;
+        height: 70px;
+    }
+    table {
+        font-size: 13px;
+    }
+    .login-box {
+        padding: 20px;
+    }
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
