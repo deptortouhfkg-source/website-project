@@ -11,9 +11,11 @@
 </head>
 
 <body>
+    <!-- ✅ Tombol menu responsif (selalu tampil di HP) -->
     <button id="menuToggle" class="menu-toggle">
-    <i data-feather="menu"></i>
-</button>
+        <i data-feather="menu"></i>
+    </button>
+
     <!-- =============== LOGIN PAGE =============== -->
     <div id="loginPage" class="login-page">
         <div class="login-box">
@@ -33,11 +35,8 @@
 
     <!-- =============== DASHBOARD =============== -->
     <div id="dashboardPage" class="dashboard" style="display:none;">
+
         <!-- Sidebar -->
-        <!-- Tombol menu (hanya tampil di HP) -->
-        <button id="menuToggle" class="menu-toggle">
-            <i data-feather="menu"></i>
-        </button>
         <aside class="sidebar">
             <div class="profile">
                 <img id="profilePic" src="profile.jpeg" alt="Profile" class="profile-pic" />
@@ -47,28 +46,20 @@
                 </div>
             </div>
             <nav>
-                <button class="tablinks active" data-tab="dashboardContent"><i data-feather="home"></i>
-                    Dashboard</button>
+                <button class="tablinks active" data-tab="dashboardContent"><i data-feather="home"></i> Dashboard</button>
                 <button class="tablinks" data-tab="announcementContent"><i data-feather="bell"></i> Pengumuman</button>
                 <button class="tablinks" data-tab="attendanceContent"><i data-feather="calendar"></i> Kehadiran</button>
-                <button class="tablinks" data-tab="journalReadingContent"><i data-feather="book-open"></i> Journal
-                    Reading</button>
-                <button class="tablinks" data-tab="materiContent"><i data-feather="file-text"></i> Materi
-                    Kepaniteraan</button>
-                <button class="tablinks" data-tab="kasusContent"><i data-feather="briefcase"></i> Mengikuti Presentasi
-                    Kasus</button>
-                <button class="tablinks" data-tab="aktivasiContent"><i data-feather="cpu"></i> Mengikuti Aktivasi
-                    Teman</button>
-                <button class="tablinks" data-tab="jurnalContent"><i data-feather="file"></i> Mengikuti Presentasi
-                    Jurnal</button>
-                <button class="tablinks" data-tab="evaluasiContent"><i data-feather="clipboard"></i> Evaluasi Presentasi
-                    Kasus</button>
-                <button class="tablinks" data-tab="requirementContent"><i data-feather="folder"></i>
-                    Requirement</button>
-                <button class="tablinks" data-tab="panduanContent"><i data-feather="info"></i> Panduan
-                    Departemen</button>
+                <button class="tablinks" data-tab="journalReadingContent"><i data-feather="book-open"></i> Journal Reading</button>
+                <button class="tablinks" data-tab="materiContent"><i data-feather="file-text"></i> Materi Kepaniteraan</button>
+                <button class="tablinks" data-tab="kasusContent"><i data-feather="briefcase"></i> Mengikuti Presentasi Kasus</button>
+                <button class="tablinks" data-tab="aktivasiContent"><i data-feather="cpu"></i> Mengikuti Aktivasi Teman</button>
+                <button class="tablinks" data-tab="jurnalContent"><i data-feather="file"></i> Mengikuti Presentasi Jurnal</button>
+                <button class="tablinks" data-tab="evaluasiContent"><i data-feather="clipboard"></i> Evaluasi Presentasi Kasus</button>
+                <button class="tablinks" data-tab="requirementContent"><i data-feather="folder"></i> Requirement</button>
+                <button class="tablinks" data-tab="panduanContent"><i data-feather="info"></i> Panduan Departemen</button>
                 <button class="tab-link" onclick="showTab('profileContent')">Profil</button>
                 <button id="logoutBtn" class="logout"><i data-feather="log-out"></i> Logout</button>
+            </nav>
         </aside>
 
         <!-- Main Content -->
@@ -85,7 +76,6 @@
                 <div id="announcementForm"></div>
                 <ul id="announcementList" class="announcement-list"></ul>
             </section>
-
 
             <!-- Kehadiran -->
             <section id="attendanceContent" class="tab-content">
@@ -122,7 +112,7 @@
                 <ul id="materiList"></ul>
             </section>
 
-            <!-- Mengikuti Presentasi Kasus -->
+            <!-- Presentasi Kasus -->
             <section id="kasusContent" class="tab-content">
                 <h1>Mengikuti Presentasi Kasus</h1>
                 <table>
@@ -139,7 +129,7 @@
                 </table>
             </section>
 
-            <!-- Mengikuti Aktivasi Teman -->
+            <!-- Aktivasi Teman -->
             <section id="aktivasiContent" class="tab-content">
                 <h1>Mengikuti Aktivasi Teman</h1>
                 <table>
@@ -157,7 +147,7 @@
                 </table>
             </section>
 
-            <!-- Mengikuti Presentasi Jurnal -->
+            <!-- Presentasi Jurnal -->
             <section id="jurnalContent" class="tab-content">
                 <h1>Mengikuti Presentasi Jurnal</h1>
                 <table>
@@ -175,7 +165,7 @@
                 </table>
             </section>
 
-            <!-- Evaluasi Presentasi Kasus -->
+            <!-- Evaluasi Kasus -->
             <section id="evaluasiContent" class="tab-content">
                 <h1>Evaluasi Presentasi Kasus</h1>
                 <table>
@@ -199,21 +189,18 @@
                 <div id="requirementContainer"></div>
             </section>
 
-
-            <!-- Panduan Departemen -->
-            <div id="panduanContent" class="tab-content" style="display:none;">
+            <!-- Panduan -->
+            <section id="panduanContent" class="tab-content" style="display:none;">
                 <h2>Panduan Kepaniteraan Klinik Ortodonti</h2>
                 <iframe src="panduan-ortodonti.pdf" width="100%" height="800px"
                     style="border:none; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.1);"></iframe>
                 <p style="font-size:14px; text-align:center; margin-top:10px;">
-                    Jika file tidak tampil, <a href="panduan-ortodonti.pdf" target="_blank">klik di sini untuk membuka
-                        panduan</a>.
+                    Jika file tidak tampil, <a href="panduan-ortodonti.pdf" target="_blank">klik di sini untuk membuka panduan</a>.
                 </p>
-            </div>
+            </section>
 
-            <!-- PROFIL MAHASISWA -->
-            <div id="profileContent" class="tab-content" style="display:none;">
-
+            <!-- Profil -->
+            <section id="profileContent" class="tab-content" style="display:none;">
                 <div id="profileSection" class="profile-container">
                     <div class="profile-photo">
                         <img id="profileImage" src="default-photo.png" alt="Foto Mahasiswa">
@@ -251,19 +238,20 @@
                         <button id="btnSavePassword" class="btn-verif waiting">Simpan Password</button>
                     </div>
                 </div>
-            </div>
-
-
+            </section>
 
             <!-- Evaluasi Mahasiswa -->
             <section id="evaluasiMahasiswaContent" class="tab-content">
                 <h1>Evaluasi Mahasiswa</h1>
                 <div id="evalBody"></div>
             </section>
+        </main>
+    </div>
 
-
-            <script src="script.js"></script>
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
 </body>
-
 
 </html>
