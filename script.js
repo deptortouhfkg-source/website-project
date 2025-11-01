@@ -152,60 +152,64 @@ registerForm.addEventListener("submit", async (e) => {
 
   const nama = document.getElementById("regNama").value.trim();
   const nim = document.getElementById("regNIM").value.trim();
+  const ovo = document.getElementById("regOVO").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
   const password = document.getElementById("regPassword").value.trim();
-  const role = "mahasiswa";
-  const fakeEmail = `${nim}@deptortofkguh.ac.id`;
 
-  if (!nama || !nim || !password) {
+  if (!nama || !nim || !email || !password) {
     Swal.fire({
       icon: "warning",
-      title: "Lengkapi Data!",
-      text: "Nama, NIM, dan Password wajib diisi!"
+      title: "Lengkapi semua data!",
+      text: "Nama, NIM, Email, dan Password wajib diisi."
     });
     return;
   }
 
   try {
-    // ✅ Cek dulu apakah email (NIM) sudah terdaftar
-    const methods = await fetchSignInMethodsForEmail(window.firebaseAuth, fakeEmail);
-    if (methods.length > 0) {
+    // Gunakan fungsi global yang sudah Anda definisikan di window
+    const userRef = window.firebaseDoc(window.firebaseDB, "users", nim);
+    const existing = await window.firebaseGetDoc(userRef);
+
+    if (existing.exists()) {
       Swal.fire({
         icon: "error",
         title: "NIM sudah digunakan!",
-        text: "Gunakan NIM lain atau login menggunakan akun yang sudah ada."
+        text: "Gunakan NIM lain atau login dengan akun yang sudah ada."
       });
       return;
     }
 
-    // Jika belum ada, lanjutkan pembuatan akun
-    const userCredential = await window.firebaseCreateUser(window.firebaseAuth, fakeEmail, password);
-    const user = userCredential.user;
-
-    await window.firebaseSetDoc(
-      window.firebaseDoc(window.firebaseDB, "users", user.uid),
-      { nama, nim, role, createdAt: new Date() }
-    );
+    // Simpan data user baru langsung ke Firestore
+    await window.firebaseSetDoc(userRef, {
+      nama,
+      nim,
+      ovo,
+      email,
+      password, // bisa diganti hash kalau mau
+      role: "mahasiswa",
+      createdAt: new Date()
+    });
 
     Swal.fire({
       icon: "success",
       title: "Registrasi Berhasil!",
-      text: "Silakan login dengan NIM Anda.",
+      text: "Silakan login menggunakan NIM Anda.",
       timer: 2000,
       showConfirmButton: false
     }).then(() => {
       registerPage.style.display = "none";
       loginPage.style.display = "flex";
     });
-
-  } catch (error) {
-    console.error("Firebase error:", error);
+  } catch (err) {
+    console.error("❌ Error registrasi:", err);
     Swal.fire({
       icon: "error",
       title: "Terjadi kesalahan!",
-      text: `${error.code} - ${error.message}`
+      text: err.message
     });
   }
 });
+
 
 
 
@@ -227,33 +231,60 @@ if (forgotForm) {
 
 
  // === LOGIN HANDLER ===
-loginForm.addEventListener("submit", (e) => {
+ loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const username = document.getElementById("username").value.trim();
+  const nim = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-  const role = document.getElementById("role").value;
 
-  const user = Object.values(accounts).find(acc => acc.user === username && acc.pass === password);
-  
-  if (user) {
-    localStorage.setItem("username", username);
-    localStorage.setItem("role", user.role);
+  if (!nim || !password) {
+    Swal.fire({ icon: "warning", title: "Isi NIM dan Password!" });
+    return;
+  }
+
+  try {
+    const db = window.firebaseDB;
+    const userRef = doc(db, "users", nim);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      Swal.fire({ icon: "error", title: "Akun tidak ditemukan!" });
+      return;
+    }
+
+    const data = userSnap.data();
+    const hashedPass = CryptoJS.SHA256(password).toString();
+
+    if (data.password !== hashedPass) {
+      Swal.fire({ icon: "error", title: "Password salah!" });
+      return;
+    }
+
+    // Simpan ke localStorage dan masuk dashboard
+    localStorage.setItem("username", nim);
+    localStorage.setItem("nama", data.nama);
+    localStorage.setItem("role", data.role);
+
     Swal.fire({
       icon: "success",
-      title: "Login Berhasil",
-      text: `Selamat datang, ${user.nama}`,
+      title: "Login Berhasil!",
+      text: `Selamat datang, ${data.nama}`,
+      timer: 2000,
+      showConfirmButton: false
     }).then(() => {
-      showDashboard(user.role, username);
+      showDashboard(data.role, nim);
     });
-  } else {
+
+  } catch (err) {
+    console.error("❌ Login error:", err);
     Swal.fire({
       icon: "error",
-      title: "Login Gagal",
-      text: "Username atau password salah!",
+      title: "Terjadi kesalahan!",
+      text: err.message
     });
   }
 });
+
 
 // === Fungsi ubah error Firebase ke bahasa yang ramah pengguna ===
 function mapFirebaseError(code) {
