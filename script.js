@@ -60,10 +60,13 @@ if (showRegisterLink) {
 
 if (showForgotLink) {
   showForgotLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (loginPage) loginPage.style.display = "none";
-    if (registerPage) registerPage.style.display = "none";
-    if (forgotPage) forgotPage.style.display = "flex";
+    e.preventDefault(); // pastikan tidak berpindah halaman
+    Swal.fire({
+      icon: "info",
+      title: "Reset Password",
+      text: "Silakan hubungi departemen untuk mengganti password Anda.",
+      confirmButtonText: "OK"
+    });
   });
 }
 
@@ -129,11 +132,6 @@ if (savedRole && savedUser) {
     $("forgotPage").style.display = "none";
   };
 
-  const showForgot = () => {
-    $("loginPage").style.display = "none";
-    $("registerPage").style.display = "none";
-    $("forgotPage").style.display = "flex";
-  };
 
   // Event klik antar halaman form
   const regLink = $("showRegister");
@@ -210,30 +208,6 @@ registerForm.addEventListener("submit", async (e) => {
 });
 
 
-
-
-
-// === Lupa Password ===
-const forgotForm = $("forgotForm");
-if (forgotForm) {
-  forgotForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = $("forgotEmail").value.trim();
-    try {
-      await firebaseAuth.sendPasswordResetEmail(window.auth, email);
-      alert("📧 Link reset password telah dikirim ke email kamu.");
-      showLogin();
-    } catch (err) {
-      $("forgotError").innerText = err.message;
-    }
-  });
-}
-
-Swal.fire({
-  icon: "info",
-  title: "Lupa Password?",
-  text: "Silakan hubungi admin atau dosen pembimbing untuk reset password Anda."
-});
 
  // ============ LOGIN BERDASARKAN NIM ============
 loginForm.addEventListener("submit", async (e) => {
