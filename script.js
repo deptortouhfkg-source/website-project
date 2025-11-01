@@ -146,7 +146,7 @@ if (savedRole && savedUser) {
   if (backLogin1) backLogin1.addEventListener("click", showLogin);
   if (backLogin2) backLogin2.addEventListener("click", showLogin);
 
-  // === Registrasi Akun ===
+// ============ REGISTRASI BERDASARKAN NIM (TANPA AUTH) ============
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -156,21 +156,20 @@ registerForm.addEventListener("submit", async (e) => {
   const email = document.getElementById("regEmail").value.trim();
   const password = document.getElementById("regPassword").value.trim();
 
-  if (!nama || !nim || !email || !password) {
+  if (!nama || !nim || !password) {
     Swal.fire({
       icon: "warning",
-      title: "Lengkapi semua data!",
-      text: "Nama, NIM, Email, dan Password wajib diisi."
+      title: "Lengkapi Semua Data!",
+      text: "Nama, NIM, dan Password wajib diisi."
     });
     return;
   }
 
   try {
-    // Gunakan fungsi global yang sudah Anda definisikan di window
     const userRef = window.firebaseDoc(window.firebaseDB, "users", nim);
-    const existing = await window.firebaseGetDoc(userRef);
+    const userSnap = await window.firebaseGetDoc(userRef);
 
-    if (existing.exists()) {
+    if (userSnap.exists()) {
       Swal.fire({
         icon: "error",
         title: "NIM sudah digunakan!",
@@ -179,13 +178,12 @@ registerForm.addEventListener("submit", async (e) => {
       return;
     }
 
-    // Simpan data user baru langsung ke Firestore
     await window.firebaseSetDoc(userRef, {
       nama,
       nim,
       ovo,
       email,
-      password, // bisa diganti hash kalau mau
+      password,
       role: "mahasiswa",
       createdAt: new Date()
     });
@@ -193,13 +191,14 @@ registerForm.addEventListener("submit", async (e) => {
     Swal.fire({
       icon: "success",
       title: "Registrasi Berhasil!",
-      text: "Silakan login menggunakan NIM Anda.",
+      text: "Silakan login dengan NIM Anda.",
       timer: 2000,
       showConfirmButton: false
     }).then(() => {
-      registerPage.style.display = "none";
-      loginPage.style.display = "flex";
+      document.getElementById("registerPage").style.display = "none";
+      document.getElementById("loginPage").style.display = "flex";
     });
+
   } catch (err) {
     console.error("❌ Error registrasi:", err);
     Swal.fire({
@@ -209,6 +208,7 @@ registerForm.addEventListener("submit", async (e) => {
     });
   }
 });
+
 
 
 
@@ -229,9 +229,14 @@ if (forgotForm) {
   });
 }
 
+Swal.fire({
+  icon: "info",
+  title: "Lupa Password?",
+  text: "Silakan hubungi admin atau dosen pembimbing untuk reset password Anda."
+});
 
- // === LOGIN HANDLER ===
- loginForm.addEventListener("submit", async (e) => {
+ // ============ LOGIN BERDASARKAN NIM ============
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const nim = document.getElementById("username").value.trim();
@@ -243,9 +248,8 @@ if (forgotForm) {
   }
 
   try {
-    const db = window.firebaseDB;
-    const userRef = doc(db, "users", nim);
-    const userSnap = await getDoc(userRef);
+    const userRef = window.firebaseDoc(window.firebaseDB, "users", nim);
+    const userSnap = await window.firebaseGetDoc(userRef);
 
     if (!userSnap.exists()) {
       Swal.fire({ icon: "error", title: "Akun tidak ditemukan!" });
@@ -253,16 +257,15 @@ if (forgotForm) {
     }
 
     const data = userSnap.data();
-    const hashedPass = CryptoJS.SHA256(password).toString();
 
-    if (data.password !== hashedPass) {
+    if (data.password !== password) {
       Swal.fire({ icon: "error", title: "Password salah!" });
       return;
     }
 
-    // Simpan ke localStorage dan masuk dashboard
-    localStorage.setItem("username", nim);
+    // Simpan info login ke localStorage
     localStorage.setItem("nama", data.nama);
+    localStorage.setItem("nim", data.nim);
     localStorage.setItem("role", data.role);
 
     Swal.fire({
@@ -276,7 +279,7 @@ if (forgotForm) {
     });
 
   } catch (err) {
-    console.error("❌ Login error:", err);
+    console.error("❌ Error login:", err);
     Swal.fire({
       icon: "error",
       title: "Terjadi kesalahan!",
@@ -286,31 +289,6 @@ if (forgotForm) {
 });
 
 
-// === Fungsi ubah error Firebase ke bahasa yang ramah pengguna ===
-function mapFirebaseError(code) {
-  switch (code) {
-    case "auth/invalid-email":
-      return "Format email tidak valid.";
-    case "auth/missing-email":
-      return "Email harus diisi.";
-    case "auth/missing-password":
-      return "Password harus diisi.";
-    case "auth/weak-password":
-      return "Password terlalu lemah (minimal 6 karakter).";
-    case "auth/email-already-in-use":
-      return "Email sudah terdaftar.";
-    case "auth/user-not-found":
-      return "Akun tidak ditemukan.";
-    case "auth/wrong-password":
-      return "Password salah. Coba lagi.";
-    case "auth/invalid-credential":
-      return "Email atau password salah.";
-    case "auth/network-request-failed":
-      return "Koneksi internet bermasalah.";
-    default:
-      return "Terjadi kesalahan. Silakan coba lagi.";
-  }
-}
 
 
   function showDashboard(role, username) {
