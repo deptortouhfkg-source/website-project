@@ -166,17 +166,24 @@ registerForm.addEventListener("submit", async (e) => {
   }
 
   try {
+    // ✅ Cek dulu apakah email (NIM) sudah terdaftar
+    const methods = await fetchSignInMethodsForEmail(window.firebaseAuth, fakeEmail);
+    if (methods.length > 0) {
+      Swal.fire({
+        icon: "error",
+        title: "NIM sudah digunakan!",
+        text: "Gunakan NIM lain atau login menggunakan akun yang sudah ada."
+      });
+      return;
+    }
+
+    // Jika belum ada, lanjutkan pembuatan akun
     const userCredential = await window.firebaseCreateUser(window.firebaseAuth, fakeEmail, password);
     const user = userCredential.user;
 
     await window.firebaseSetDoc(
       window.firebaseDoc(window.firebaseDB, "users", user.uid),
-      {
-        nama,
-        nim,
-        role,
-        createdAt: new Date()
-      }
+      { nama, nim, role, createdAt: new Date() }
     );
 
     Swal.fire({
@@ -199,6 +206,7 @@ registerForm.addEventListener("submit", async (e) => {
     });
   }
 });
+
 
 
 // === Lupa Password ===
