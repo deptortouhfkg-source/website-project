@@ -1,0 +1,134 @@
+/* ============================================================
+   E-LOGBOOK ORTODONTI - FINAL STYLE (RESPONSIVE)
+   ============================================================ */
+
+/* RESET & GLOBAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: url("bg.jpeg") center/cover no-repeat fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Overlay lembut putih */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+/* LOGIN CONTAINER */
+.login-container {
+    position: relative;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 340px;
+    z-index: 10;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.login-container h2 {
+    color: #004aad;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+/* FORM FIELDS */
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #004aad;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #003b8a;
+}
+
+/* LINKS */
+.links {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.links a {
+    color: #004aad;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* FORM SECTIONS */
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    input,
+    select,
+    button {
+        font-size: 13px;
+    }
+}

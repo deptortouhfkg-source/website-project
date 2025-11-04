@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Logbook Ortodonti</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="login-container">
+        <h2 id="formTitle">Login E-Logbook</h2>
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm" class="form-section active">
+            <input type="text" id="username" placeholder="Masukkan NIM" />
+            <input type="password" id="password" placeholder="Masukkan Password" />
+            <select id="role">
+                <option value="mahasiswa">Mahasiswa</option>
+                <option value="dosen">Dosen</option>
+            </select>
+            <button onclick="login()">Login</button>
+
+            <div class="links">
+                <a href="#" onclick="showRegister()">Daftar Akun</a> |
+                <a href="#" onclick="showForgot()">Lupa Password?</a>
+            </div>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="registerForm" class="form-section">
+            <input type="text" id="regName" placeholder="Nama Lengkap" />
+            <input type="text" id="regNIM" placeholder="NIM" />
+            <input type="password" id="regPass" placeholder="Password" />
+            <select id="regRole">
+                <option value="mahasiswa">Mahasiswa</option>
+                <option value="dosen">Dosen</option>
+            </select>
+            <button onclick="register()">Daftar</button>
+
+            <div class="links">
+                <a href="#" onclick="showLogin()">Kembali ke Login</a>
+            </div>
+        </div>
+
+        <!-- LUPA PASSWORD -->
+        <div id="forgotForm" class="form-section">
+            <p>Untuk ubah password, silakan hubungi admin.</p>
+            <div class="links">
+                <a href="#" onclick="showLogin()">Kembali ke Login</a>
+            </div>
+        </div>
+
+        <div class="footer">© 2025 E-Logbook Ortodonti</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
