@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - E-Logbook Ortodonti</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - E-Logbook Ortodonti</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body onload="loadDashboard()">
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <!-- Button for toggling sidebar -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-  <div class="sidebar" id="sidebar">
-    <h2 id="roleTitle"></h2>
-    <ul id="menuList"></ul>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <h2 id="roleTitle">Mahasiswa</h2>
+        <ul id="menuList">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Pengumuman</a></li>
+            <li><a href="#">Kehadiran</a></li>
+            <li><a href="#">Journal Reading</a></li>
+            <li><a href="#">Materi Kepaniteraan</a></li>
+            <li><a href="#">Presentasi Kasus</a></li>
+            <li><a href="#">Aktivitas Teman</a></li>
+            <li><a href="#">Profil</a></li>
+            <li><a href="#">Evaluasi Mahasiswa</a></li>
+        </ul>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
 
-  <div class="content" id="mainContent">
-    <h3>Selamat Datang di E-Logbook Ortodonti</h3>
-    <p>Pilih menu di samping untuk memulai aktivitas Anda.</p>
-  </div>
+    <!-- Main Content -->
+    <div class="content" id="mainContent">
+        <h3>Selamat Datang di E-Logbook Ortodonti</h3>
+        <p>Pilih menu di samping untuk memulai aktivitas Anda.</p>
+    </div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
