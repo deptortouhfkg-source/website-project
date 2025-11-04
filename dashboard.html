@@ -1,25 +1,271 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - E-Logbook Ortodonti</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - E-Logbook Ortodonti</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: url("bg.jpeg") center/cover fixed no-repeat;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(#004aad, #007bff);
+            color: #fff;
+            padding: 2rem 1rem;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 12px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.96);
+            margin-left: 270px;
+            border-radius: 12px;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        h3 {
+            color: #004aad;
+            margin-bottom: 15px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #004aad;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #003b8a;
+        }
+
+        .profile-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .profile-box img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid #004aad;
+            object-fit: cover;
+        }
+
+        .profile-box input {
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .info {
+            background: #e8f0ff;
+            border-left: 4px solid #004aad;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #004aad;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            iframe {
+                height: 400px;
+            }
+        }
+    </style>
 </head>
 
 <body onload="loadDashboard()">
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-  <div class="sidebar" id="sidebar">
-    <h2 id="userRole"></h2>
-    <ul id="menuList"></ul>
-  </div>
+    <div class="sidebar">
+        <h2 id="userRole"></h2>
+        <ul id="menuList"></ul>
+    </div>
 
-  <div class="content" id="mainContent">
-    <h3>Selamat Datang di E-Logbook Ortodonti</h3>
-    <p>Pilih menu di samping untuk memulai aktivitas Anda.</p>
-  </div>
+    <div class="content" id="mainContent">
+        <h3>Selamat Datang di E-Logbook Ortodonti</h3>
+        <p>Pilih menu di samping untuk memulai aktivitas Anda.</p>
+    </div>
 
-  <script src="script.js"></script>
+    <script>
+        // Ambil data user dari localStorage
+        const user = JSON.parse(localStorage.getItem("loggedUser"));
+        if (!user) {
+            alert("Silakan login terlebih dahulu!");
+            window.location.href = "index.html";
+        }
+
+        const menuList = document.getElementById("menuList");
+        const mainContent = document.getElementById("mainContent");
+        const role = user.role;
+
+        // Muat menu sesuai role
+        function loadDashboard() {
+            document.getElementById("userRole").innerText = role === "mahasiswa" ? "Mahasiswa" : "Dosen";
+
+            const menus = role === "mahasiswa" ? [
+                ["Dashboard", "dashboard"],
+                ["Pengumuman", "pengumuman"],
+                ["Kehadiran", "kehadiran"],
+                ["Journal Reading", "journal"],
+                ["Materi Kepaniteraan", "materi"],
+                ["Presentasi Kasus", "presentasi"],
+                ["Aktivitas Teman", "teman"],
+                ["Profil", "profil"],
+                ["Evaluasi Mahasiswa", "evaluasi"],
+                ["Logout", "logout"]
+            ] : [
+                ["Dashboard", "dashboard"],
+                ["Pengumuman", "pengumuman"],
+                ["Kehadiran Mahasiswa", "kehadiran_dsn"],
+                ["Review Journal", "review"],
+                ["Verifikasi Materi", "verifikasi"],
+                ["Penilaian", "penilaian"],
+                ["Profil Dosen", "profil_dsn"],
+                ["Logout", "logout"]
+            ];
+
+            menuList.innerHTML = "";
+            menus.forEach(([name, key]) => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="#" onclick="showContent('${key}')">${name}</a>`;
+                menuList.appendChild(li);
+            });
+        }
+
+        // Tampilkan konten dinamis
+        function showContent(menu) {
+            if (menu === "dashboard") {
+                mainContent.innerHTML = `<h3>Dashboard</h3><p>Selamat datang, <b>${user.name}</b>!</p>`;
+            }
+            else if (menu === "pengumuman") {
+                mainContent.innerHTML = "<h3>Pengumuman</h3><p>Tidak ada pengumuman baru.</p>";
+            }
+            else if (menu === "kehadiran" || menu === "kehadiran_dsn") {
+                mainContent.innerHTML = "<h3>Kehadiran</h3><p>Data kehadiran akan muncul di sini.</p>";
+            }
+            else if (menu === "journal" || menu === "review") {
+                mainContent.innerHTML = `<h3>Journal Reading</h3><iframe src='panduan-ortodonti.pdf'></iframe>`;
+            }
+            else if (menu === "materi" || menu === "verifikasi") {
+                mainContent.innerHTML = "<h3>Materi Kepaniteraan</h3><p>Klik tombol di bawah untuk mengajukan materi.</p><button onclick='alert(\"Materi diajukan untuk verifikasi!\")'>Ajukan</button>";
+            }
+            else if (menu === "presentasi") {
+                mainContent.innerHTML = "<h3>Presentasi Kasus</h3><p>Unggah hasil presentasi Anda di sini.</p>";
+            }
+            else if (menu === "teman") {
+                mainContent.innerHTML = "<h3>Aktivitas Teman</h3><p>Lihat aktivitas mahasiswa lain.</p>";
+            }
+            else if (menu === "penilaian") {
+                mainContent.innerHTML = "<h3>Penilaian</h3><p>Input nilai mahasiswa yang telah diverifikasi.</p>";
+            }
+            else if (menu === "profil" || menu === "profil_dsn") {
+                mainContent.innerHTML = `
+          <h3>Profil ${role === "mahasiswa" ? "Mahasiswa" : "Dosen"}</h3>
+          <div class='profile-box'>
+            <img src='profile.jpeg' alt='Foto Profil'>
+            <p><b>Nama:</b> <span id='namaProfil'>${user.name}</span></p>
+            <p><b>NIM:</b> <span id='nimProfil'>${user.nim}</span></p>
+            <input type='text' id='ubahNama' placeholder='Ubah Nama'>
+            <input type='text' id='ubahNim' placeholder='Ubah NIM'>
+            <button onclick='ubahProfil()'>Simpan Perubahan</button>
+            <div class='info'>Untuk ubah password, silakan hubungi admin.</div>
+          </div>`;
+            }
+            else if (menu === "evaluasi") {
+                mainContent.innerHTML = "<h3>Evaluasi Mahasiswa</h3><p>Form evaluasi kegiatan akan muncul di sini.</p>";
+            }
+            else if (menu === "logout") {
+                logout();
+            }
+        }
+
+        // Fungsi ubah profil
+        function ubahProfil() {
+            const namaBaru = document.getElementById("ubahNama").value;
+            const nimBaru = document.getElementById("ubahNim").value;
+
+            if (!namaBaru && !nimBaru) {
+                alert("Isi salah satu kolom untuk memperbarui profil!");
+                return;
+            }
+
+            if (namaBaru) user.name = namaBaru;
+            if (nimBaru) user.nim = nimBaru;
+            localStorage.setItem("loggedUser", JSON.stringify(user));
+
+            document.getElementById("namaProfil").innerText = user.name;
+            document.getElementById("nimProfil").innerText = user.nim;
+
+            alert("Profil berhasil diperbarui!");
+        }
+
+        function logout() {
+            alert("Anda telah logout.");
+            localStorage.removeItem("loggedUser");
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
+
 </html>
