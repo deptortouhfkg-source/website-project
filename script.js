@@ -90,3 +90,7 @@ function logout() {
     localStorage.removeItem("loggedUser");
     window.location.href = "index.html";
 }
+function toggleMenu() {
+  document.querySelector(".sidebar").classList.toggle("active");
+}
+
