@@ -1,8 +1,4 @@
-/* ==========================================
-   E-LOGBOOK ORTODONTI - FINAL RESPONSIVE
-   ========================================== */
-
-/* ===== GLOBAL RESET ===== */
+/* ======== GLOBAL ======== */
 * {
   margin: 0;
   padding: 0;
@@ -13,189 +9,158 @@
 body {
   background: url("bg.jpeg") center/cover no-repeat fixed;
   min-height: 100vh;
-  overflow-x: hidden;
+  position: relative;
 }
 
-/* ===== LOGIN ===== */
+/* Overlay putih lembut */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: -1;
+}
+
+/* ======== LOGIN PAGE ======== */
 .login-container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  backdrop-filter: blur(5px);
+  min-height: 100vh;
 }
 
-.login-container h2 {
+.login-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-box h2 {
   color: #004aad;
-  font-size: 24px;
   margin-bottom: 20px;
 }
 
-.login-container select,
-.login-container input {
-  width: 300px;
+.login-box input,
+.login-box select {
+  width: 100%;
   padding: 10px;
   margin: 8px 0;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
 }
 
-.login-container button {
-  width: 320px;
+.login-box button {
+  width: 100%;
   padding: 10px;
-  background-color: #004aad;
+  background: #004aad;
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.login-box button:hover {
+  background: #003a8c;
+}
+
+.login-footer {
   margin-top: 10px;
-  transition: 0.3s ease;
+  font-size: 0.9em;
+  color: #333;
 }
 
-.login-container button:hover {
-  background-color: #003380;
-}
-
-.links {
-  margin-top: 15px;
-  text-align: center;
-}
-
-.links a {
-  color: #007bff;
+.login-footer a {
+  color: #004aad;
   text-decoration: none;
 }
 
-.links a:hover {
+.login-footer a:hover {
   text-decoration: underline;
 }
 
-/* ===== REGISTER & FORGOT ===== */
-.form-section {
-  display: none;
-  margin-top: 20px;
-  text-align: center;
+/* ======== DASHBOARD ======== */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.form-section h3 {
-  color: #004aad;
-  margin-bottom: 10px;
-}
-
-footer {
-  margin-top: 25px;
-  font-size: 13px;
-  color: #444;
-}
-
-/* ===== DASHBOARD ===== */
+/* Sidebar */
 .sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
   width: 250px;
-  height: 100%;
-  background: linear-gradient(to bottom, #004aad, #007bff);
+  background: linear-gradient(to bottom, #0052cc, #0073e6);
   color: white;
-  padding: 2rem 1rem;
-  z-index: 1000;
-  transition: left 0.3s ease;
+  padding: 20px;
+  flex-shrink: 0;
 }
 
 .sidebar h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 8px 0;
-}
-
-.sidebar ul li a {
+.sidebar a {
   display: block;
   color: white;
   text-decoration: none;
   padding: 10px 15px;
-  border-radius: 8px;
-  transition: 0.3s;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background 0.3s;
 }
 
-.sidebar ul li a:hover {
+.sidebar a:hover,
+.sidebar a.active {
   background: rgba(255, 255, 255, 0.2);
 }
 
 .logout-btn {
-  width: 100%;
-  margin-top: 1rem;
+  background: #ff4d4d;
+  text-align: center;
   padding: 10px;
-  background: #ff4757;
-  border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-top: 20px;
+  text-decoration: none;
+  display: block;
 }
 
 .logout-btn:hover {
-  background: #e84118;
+  background: #e60000;
 }
 
-/* ===== CONTENT ===== */
+/* Konten */
 .content {
-  margin-left: 270px;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 12px;
-  min-height: 100vh;
-  position: relative;
-  z-index: 1;
+  flex: 1;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  overflow-y: auto;
 }
 
-.content h3 {
+.content h1 {
   color: #004aad;
   margin-bottom: 15px;
 }
 
-/* ===== RESPONSIVE ===== */
-.menu-toggle {
-  display: none;
-}
-
+/* ======== RESPONSIVE ======== */
 @media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
   .sidebar {
-    left: -260px;
-  }
-
-  .sidebar.active {
-    left: 0;
-  }
-
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-size: 24px;
-    border-radius: 5px;
-    padding: 6px 10px;
-    z-index: 1100;
-    cursor: pointer;
+    width: 100%;
+    text-align: center;
   }
 
   .content {
-    margin-left: 0;
-    padding: 20px;
+    padding: 15px;
+  }
+
+  .login-box {
+    width: 90%;
   }
 }
